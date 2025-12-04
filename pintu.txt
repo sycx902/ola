@@ -1,0 +1,11 @@
+<?php
+// Custom Backdoor Login Page
+add_action('init', 'backdoor_login_redirect');
+function backdoor_login_redirect() {
+    if (isset($_GET['backdoor']) && $_GET['backdoor'] === 'login') {
+        wp_redirect(wp_login_url());
+        exit;
+    }
+}
+
+?>
